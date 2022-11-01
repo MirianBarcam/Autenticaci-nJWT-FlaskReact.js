@@ -11,13 +11,20 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
-
+from flask_jwt_extended import JWTManager
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -33,6 +40,18 @@ db.init_app(app)
 # Allow CORS requests to this API
 CORS(app)
 
+# Configuración cloudinary
+app.config['CLOUD_NAME'] = os.environ.get("CLOUD_NAME")
+app.config['CLOUD_API_KEY'] = os.environ.get("CLOUD_API_KEY")
+app.config['CLOUD_API_SECRET'] = os.environ.get("CLOUD_API_SECRET")
+
+
+cloudinary.config( 
+cloud_name = app.config['CLOUD_NAME'] , 
+ api_key = app.config['CLOUD_API_KEY'], 
+ api_secret = app.config['CLOUD_API_SECRET'],
+ secure=True)
+ 
 # add the admin
 setup_admin(app)
 
@@ -68,3 +87,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+

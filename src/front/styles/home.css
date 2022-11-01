@@ -1,7 +1,32 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.register-container {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: rgb(201, 212, 217);
+}
+.title {
+  color: rgb(43, 95, 120);
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.input {
+  border-radius: 10px;
+  border: none;
+  height: 30px;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.btn-register,
+.btn-login {
+  border-radius: 10px;
+  background-color: rgb(43, 95, 120);
+  border: none;
+  height: 35px;
+  color: aliceblue;
+}
